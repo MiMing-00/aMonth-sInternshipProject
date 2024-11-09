@@ -6,16 +6,16 @@ import axios from "axios";
 const Header = () => {
   const { loadSessionToken, accessToken, userInfo, setUserInfo } =
     useAuthStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initAuth = async () => {
       await loadSessionToken();
-      setIsLoading(true);
+      setIsLoading(false);
     };
 
     initAuth();
-  }, [loadSessionToken]);
+  }, []);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -55,7 +55,7 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center m-4">
-      <div>한달인턴과제</div>
+      <Link to="/">한달인턴과제</Link>
       <div className="flex gap-4">
         <div>
           {userInfo ? (

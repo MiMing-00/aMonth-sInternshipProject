@@ -23,6 +23,9 @@ type AuthStore = {
   loadSessionToken: () => void;
   userInfo: UserInfo | null;
   setUserInfo: (userInfo: UserInfo) => void;
+  updateUserInfo: (
+    newUserInfo: Partial<Pick<UserInfo, "nickname" | "avatar">>
+  ) => void;
 };
 
 const useAuthStore = create<AuthStore>()((set) => ({
@@ -33,6 +36,7 @@ const useAuthStore = create<AuthStore>()((set) => ({
   accessToken: sessionStorage.getItem("accessToken"),
   setSessionToken: (token) => {
     sessionStorage.setItem("accessToken", token);
+    set({ accessToken: token });
   },
   loadSessionToken: () => {
     const token = sessionStorage.getItem("accessToken");
@@ -41,6 +45,16 @@ const useAuthStore = create<AuthStore>()((set) => ({
 
   userInfo: null,
   setUserInfo: (userInfo: UserInfo) => set(() => ({ userInfo })),
+  updateUserInfo: (
+    newUserInfo: Partial<Pick<UserInfo, "nickname" | "avatar">>
+  ) =>
+    set((state) => ({
+      userInfo: state.userInfo
+        ? { ...state.userInfo, ...newUserInfo }
+        : state.userInfo,
+    })),
+
+    
 }));
 
 export default useAuthStore;

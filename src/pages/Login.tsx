@@ -6,14 +6,19 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [loginEmail, setLoginEmail] = useState<string>("");
   const [loginPassword, setLoginPassword] = useState<string>("");
-  const { saveInitialLoginInfo, setSessionToken } = useAuthStore();
+  const {
+    initialLoginInfo,
+    saveInitialLoginInfo,
+    setSessionToken,
+    setUserInfo,
+  } = useAuthStore();
   const navigate = useNavigate();
 
   const NavigateHome = () => {
     navigate("/");
   };
 
-  const loginTest = async (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!loginEmail || !loginPassword) {
       Swal.fire({
@@ -38,6 +43,7 @@ const Login = () => {
       });
       const data = await res.json();
       saveInitialLoginInfo(data);
+      setUserInfo(data);
       setSessionToken(data.accessToken);
 
       if (data.success) {
@@ -51,7 +57,7 @@ const Login = () => {
   return (
     <form
       className="flex flex-col justify-center text-center items-center al gap-4 border p-4 m-4 bg-black text-white"
-      onSubmit={loginTest}
+      onSubmit={handleLogin}
     >
       <h1>LOGIN FORM</h1>
       <div className="border-white border-2 rounded-full w-52 h-52 flex justify-center">

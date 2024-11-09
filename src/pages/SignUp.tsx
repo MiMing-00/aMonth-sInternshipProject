@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
+  const navigate = useNavigate();
 
   const signUpTest = async () => {
     if (!email || !password || !nickname) {
@@ -33,7 +34,14 @@ const SignUp: React.FC = () => {
       const data = await res.json();
       console.log(data);
 
-      // 성공했다고 알림 하기 혹은 바로 로그인 되게 하기! 혹은 로그인 페이지로 이동
+      Swal.fire({
+        title: "회원가입을 축하합니다!",
+        text: `${nickname} 님 어서오세요!`,
+        icon: "success",
+      });
+      navigate("/login");
+      
+
     } catch (error) {
       console.log("실패", error);
     }

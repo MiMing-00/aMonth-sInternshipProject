@@ -1,11 +1,17 @@
 import { ReactNode } from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }: ReactNode) => {
+
+const Layout = () => {
   return (
     <div>
-      <div>헤더</div>
-      <div>{children}</div>
-      <div>푸터</div>
+      <Header />
+      <div>
+        <Outlet/>
+      </div>
+      <Footer />
     </div>
   );
 };

@@ -8,7 +8,7 @@ type LoginInfo = {
   nickname: string;
 };
 
-type UserInfo = {
+export type UserInfo = {
   avatar: string | null;
   id: string;
   nickname: string;
@@ -48,6 +48,7 @@ const useAuthStore = create<AuthStore>()((set) => ({
     set({ accessToken: null });
   },
 
+  // 탄스택 쿼리로 리팩토링
   userInfo: null,
   setUserInfo: (userInfo: UserInfo) => set(() => ({ userInfo })),
   updateUserInfo: (

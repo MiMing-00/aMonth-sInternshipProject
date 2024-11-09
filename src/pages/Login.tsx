@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [loginEmail, setLoginEmail] = useState<string>("");
   const [loginPassword, setLoginPassword] = useState<string>("");
-  const { saveInitialLoginInfo, setSessionToken, setUserInfo } = useAuthStore();
+  const { saveInitialLoginInfo, setSessionToken } = useAuthStore();
   const navigate = useNavigate();
 
   const NavigateHome = () => {

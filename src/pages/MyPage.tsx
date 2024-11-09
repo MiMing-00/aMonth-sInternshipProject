@@ -1,26 +1,20 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState } from "react";
 import useAuthStore from "../stores/authStore";
-import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import useFetchUserInfo from "../hooks/useFetchUserInfo";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import updateProfile from "../api/updateProfile";
 
 const MyPage: React.FC = () => {
-  const { userInfo, initialLoginInfo, updateUserInfo, accessToken } =
-    useAuthStore();
+  const { accessToken } = useAuthStore();
+  const { data, isLoading } = useFetchUserInfo(accessToken);
+  const queryClient = useQueryClient();
   const [myPageNickname, setMyPageNickname] = useState<string>(
-    userInfo?.nickname || ""
+    data?.nickname || ""
   );
   const [MyPageAvatar, setMyPageAvatar] = useState<string | File | null>(
-    userInfo?.avatar || null
+    data?.avatar || null
   );
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (userInfo) {
-      setMyPageNickname(userInfo.nickname);
-      setMyPageAvatar(userInfo?.avatar);
-    }
-  }, [userInfo]);
 
   const handleAvatarUrlChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -41,38 +35,28 @@ const MyPage: React.FC = () => {
     setMyPageAvatar(file);
   };
 
-  const handleUserInfo = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setIsLoading(true);
-
-    const formData = new FormData();
-    formData.append("nickname", myPageNickname);
-    if (MyPageAvatar) formData.append("avatar", MyPageAvatar);
-
-    try {
-      const response = await axios.patch(
-        "https://moneyfulpublicpolicy.co.kr/profile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      const { data } = response;
-      updateUserInfo(data);
-
+  const mutate = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: (updateData) => {
+      console.log(updateData);
+      queryClient.invalidateQueries({ queryKey: ["userInfo"] });
       Swal.fire({
         title: "변경 완료!",
         icon: "success",
       });
-      console.log(userInfo);
-    } catch (error) {
+    },
+    onError: (error) => {
       console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+    },
+  });
+
+  const handleUserInfo = (event: React.FormEvent) => {
+    event.preventDefault();
+    mutate.mutate({
+      nickname: myPageNickname,
+      avatar: MyPageAvatar,
+      accessToken,
+    });
   };
 
   //스피너로 바꾸기
@@ -82,7 +66,7 @@ const MyPage: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center text-center">
-      <h1>{userInfo?.nickname}님의 마이페이지</h1>
+      <h1>{data?.nickname}님의 마이페이지</h1>
       <form onSubmit={handleUserInfo}>
         <label>닉네임:</label>
         <input
@@ -103,7 +87,7 @@ const MyPage: React.FC = () => {
                   ? MyPageAvatar
                   : URL.createObjectURL(MyPageAvatar)
               }
-              alt={`${userInfo?.nickname}의 아바타`}
+              alt={`${data?.nickname}의 아바타`}
               width="50"
               height="50"
             />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import useAuthStore from "../stores/authStore";
 import { Link, useNavigate } from "react-router-dom";
@@ -38,7 +38,6 @@ const Login = () => {
       });
       const data = await res.json();
       saveInitialLoginInfo(data);
-      setUserInfo(data);
       setSessionToken(data.accessToken);
 
       if (data.success) {

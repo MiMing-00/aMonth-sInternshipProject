@@ -21,6 +21,7 @@ type AuthStore = {
   accessToken: string | null;
   setSessionToken: (token: string) => void;
   loadSessionToken: () => void;
+  removeAccessToken: () => void;
   userInfo: UserInfo | null;
   setUserInfo: (userInfo: UserInfo) => void;
   updateUserInfo: (
@@ -42,6 +43,10 @@ const useAuthStore = create<AuthStore>()((set) => ({
     const token = sessionStorage.getItem("accessToken");
     if (token) set({ accessToken: token });
   },
+  removeAccessToken: () => {
+    sessionStorage.removeItem("accessToken");
+    set({ accessToken: null });
+  },
 
   userInfo: null,
   setUserInfo: (userInfo: UserInfo) => set(() => ({ userInfo })),
@@ -53,8 +58,6 @@ const useAuthStore = create<AuthStore>()((set) => ({
         ? { ...state.userInfo, ...newUserInfo }
         : state.userInfo,
     })),
-
-    
 }));
 
 export default useAuthStore;

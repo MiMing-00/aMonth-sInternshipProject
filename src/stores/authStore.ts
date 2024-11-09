@@ -16,8 +16,8 @@ type UserInfo = {
 };
 
 type AuthStore = {
-  loginInfo: LoginInfo | null;
-  saveLoginInfo: (loginInfo: LoginInfo) => void;
+  initialLoginInfo: LoginInfo | null;
+  saveInitialLoginInfo: (loginInfo: LoginInfo) => void;
   accessToken: string | null;
   setSessionToken: (token: string) => void;
   loadSessionToken: () => void;
@@ -26,8 +26,9 @@ type AuthStore = {
 };
 
 const useAuthStore = create<AuthStore>()((set) => ({
-  loginInfo: null,
-  saveLoginInfo: (loginInfo: LoginInfo) => set(() => ({ loginInfo })),
+  initialLoginInfo: null,
+  saveInitialLoginInfo: (initialLoginInfo: LoginInfo) =>
+    set(() => ({ initialLoginInfo })),
 
   accessToken: sessionStorage.getItem("accessToken"),
   setSessionToken: (token) => {

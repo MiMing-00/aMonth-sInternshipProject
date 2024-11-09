@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAuthStore from "../stores/authStore";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [loginEmail, setLoginEmail] = useState<string>("");
   const [loginPassword, setLoginPassword] = useState<string>("");
-  const { loginInfo, saveLoginInfo, setSessionToken } = useAuthStore();
+  const { saveInitialLoginInfo, setSessionToken } = useAuthStore();
   const navigate = useNavigate();
 
   const NavigateHome = () => {
@@ -37,7 +37,7 @@ const Login = () => {
         body: JSON.stringify(userLoginData),
       });
       const data = await res.json();
-      saveLoginInfo(data);
+      saveInitialLoginInfo(data);
       setSessionToken(data.accessToken);
 
       if (data.success) {
@@ -47,12 +47,6 @@ const Login = () => {
       console.log("실패", error);
     }
   };
-
-  useEffect(() => {
-    if (loginInfo) {
-      console.log("loginInfo", loginInfo);
-    }
-  }, [loginInfo]);
 
   return (
     <form

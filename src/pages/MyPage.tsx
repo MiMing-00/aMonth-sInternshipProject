@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import useFetchUserInfo from "../hooks/useFetchUserInfo";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import updateProfile from "../api/updateProfile";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const MyPage: React.FC = () => {
   const { accessToken } = useAuthStore();
@@ -59,9 +60,8 @@ const MyPage: React.FC = () => {
     });
   };
 
-  //스피너로 바꾸기
   if (isLoading) {
-    return <div>잠시만용</div>;
+    return <LoadingSpinner />;
   }
 
   return (

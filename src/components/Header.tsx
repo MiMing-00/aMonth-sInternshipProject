@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useFetchUserInfo from "../hooks/useFetchUserInfo";
 import { useQueryClient } from "@tanstack/react-query";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Header = () => {
   const { loadSessionToken, accessToken, removeAccessToken } = useAuthStore();
@@ -22,7 +23,7 @@ const Header = () => {
   }, []);
 
   if (isLoading) {
-    return <div>잠시만용</div>;
+    return <LoadingSpinner />;
   }
 
   const handleLogOut = () => {

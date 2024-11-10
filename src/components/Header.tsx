@@ -42,23 +42,37 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between items-center m-4">
-      <Link to="/">한달인턴과제</Link>
+    <div className="relative flex justify-between items-center m-4 font-bold w-full">
+      <Link to="/" className="hover:text-[#c1a48c]">
+        한 달 인턴
+      </Link>
+      <div className="hidden absolute left-1/2 transform -translate-x-1/2 md:block">
+        Become a Front-End Developer
+      </div>
       <div className="flex gap-4">
         <div>
           {data ? (
-            <Link to="/myPage">{data.nickname}님</Link>
+            <Link to="/myPage" className="hover:text-[#c1a48c]">
+              {data.nickname}님
+            </Link>
           ) : (
-            <Link to="/signUp">회원가입</Link>
+            <Link to="/signUp" className="hover:text-[#c1a48c]">
+              회원가입
+            </Link>
           )}
         </div>
         <div>
           {data ? (
-            <span onClick={handleLogOut} className="cursor-pointer">
+            <span
+              onClick={handleLogOut}
+              className="cursor-pointer hover:text-[#c1a48c]"
+            >
               로그아웃
             </span>
           ) : (
-            <Link to="/login">로그인</Link>
+            <Link to="/login" className="hover:text-[#c1a48c]">
+              로그인
+            </Link>
           )}
         </div>
       </div>

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import GitHub from "../assets/GitHub.png";
 import Velog from "../assets/Velog.jfif";
 

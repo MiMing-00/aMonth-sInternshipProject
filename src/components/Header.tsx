@@ -42,14 +42,14 @@ const Header = () => {
   };
 
   return (
-    <div className="relative flex justify-between items-center m-4 font-bold w-full">
+    <div className="relative flex justify-between items-center font-bold w-full m-4">
       <Link to="/" className="hover:text-[#c1a48c]">
         한 달 인턴
       </Link>
       <div className="hidden absolute left-1/2 transform -translate-x-1/2 md:block">
         Become a Front-End Developer
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 mr-10">
         <div>
           {data ? (
             <Link to="/myPage" className="hover:text-[#c1a48c]">

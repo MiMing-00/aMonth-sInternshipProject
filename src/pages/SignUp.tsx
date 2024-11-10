@@ -7,7 +7,6 @@ const SignUp: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
-  const [isPasswordFocused, setIsPasswordFocused] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const signUpSchema = z.object({
@@ -22,6 +21,10 @@ const SignUp: React.FC = () => {
       .regex(/\d/, "비밀번호는 숫자를 포함해야 합니다."),
     nickname: z.string().min(2, "닉네임은 최소 2자 이상이어야 합니다."),
   });
+
+  const NavigateLogin = () => {
+    navigate("/login");
+  };
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -67,7 +70,7 @@ const SignUp: React.FC = () => {
         text: `${nickname} 님 로그인 부탁드려요!`,
         icon: "success",
       });
-      navigate("/login");
+      NavigateLogin();
     } catch (error) {
       console.log("실패", error);
       if (error instanceof z.ZodError) {
@@ -80,9 +83,9 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center text-center items-center al gap-4 p-4 m-4">
+    <div className="flex flex-col justify-center text-center items-center gap-4 p-4">
       <h1 className="font-bold text-[#d6bb61]">SIGN UP FORM</h1>
-      <div className=" h-32 flex flex-col justify-center gap-3">
+      <div className="h-32 flex flex-col justify-center gap-3">
         <div className="text-xl font-extrabold">
           한 달 인턴 <p>프론트엔드 개발 온보딩 과제</p>
         </div>
@@ -90,7 +93,7 @@ const SignUp: React.FC = () => {
           유효성 검사를 포함한 회원가입 기능
         </div>
       </div>
-      <form onSubmit={handleSignUp} className="flex flex-col w-1/2">
+      <form onSubmit={handleSignUp} className="flex flex-col w-2/3 md:w-1/4">
         <input
           type="text"
           placeholder="User name"
@@ -112,11 +115,11 @@ const SignUp: React.FC = () => {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <div className="h-3">
+        <div className="min-h-10">
           {password && (
-            <small className="mt-1 ml-2 text-gray-500 text-xs flex flex-col md:flex-row">
-              <span>비밀번호는 최소 6자 이상이어야 하며,</span>{" "}
-              <span>비밀번호는 영문 대소문자를 모두 포함해야 합니다.</span>
+            <small className="mt-1 ml-2 text-gray-500 text-xs flex flex-col gap-2">
+              <div>비밀번호는 최소 6자 이상이어야 하며, </div>
+              <div>비밀번호는 영문 대소문자를 모두 포함해야 합니다.</div>
             </small>
           )}
         </div>
@@ -125,7 +128,7 @@ const SignUp: React.FC = () => {
             LOGIN로 이동
           </Link>
           <div> | </div>
-          <button type="submit" className="font-bold">
+          <button type="submit" className="font-bold hover:text-[#c1a48c]">
             SIGN IN
           </button>
         </div>

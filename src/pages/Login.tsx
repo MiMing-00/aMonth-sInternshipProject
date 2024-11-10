@@ -36,9 +36,24 @@ const Login = () => {
         },
         body: JSON.stringify(userLoginData),
       });
+
+      if (res.status === 401) {
+        Swal.fire({
+          text: "아이디와 비밀번호를 다시 확인해주세요!",
+          icon: "error",
+        });
+        return;
+      }
+
       const data = await res.json();
       saveInitialLoginInfo(data);
       setSessionToken(data.accessToken);
+
+      Swal.fire({
+        title: "로그인 되었습니다.",
+        text: `홈으로 이동합니다!`,
+        icon: "success",
+      });
 
       if (data.success) {
         NavigateHome();
@@ -49,33 +64,42 @@ const Login = () => {
   };
 
   return (
-    <form
-      className="flex flex-col justify-center text-center items-center al gap-4 border p-4 m-4 bg-black text-white"
-      onSubmit={handleLogin}
-    >
-      <h1>LOGIN FORM</h1>
-      <div className="border-white border-2 rounded-full w-52 h-52 flex justify-center">
-        여기다가 넣을 거 생각하기~!
+    <div className="flex flex-col justify-center text-center items-center gap-4 p-4 m-4">
+      <h1 className="font-bold text-[#d6bb61]">LOGIN FORM</h1>
+      <div className="h-32 flex flex-col justify-center gap-3">
+        <div className="text-xl font-extrabold">
+          한 달 인턴 <p>프론트엔드 개발 온보딩 과제</p>
+        </div>
+        <div className="text-gray-400 text-xs font-semibold">
+          주스탠드와 세션스토리지를 이용한 로그인 기능
+        </div>
       </div>
-      <input
-        type="text"
-        placeholder="email@domain.com"
-        className="m-1 p-3 rounded-sm text-black"
-        value={loginEmail}
-        onChange={(e) => setLoginEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        className="m-1 p-3 rounded-sm text-black"
-        value={loginPassword}
-        onChange={(e) => setLoginPassword(e.target.value)}
-      />
-      <div className="flex gap-4 items-center">
-        <Link to="/signUp"> SIGN UP </Link>
-        <button type="submit">LOGIN IN</button>
-      </div>
-    </form>
+      <form className="flex flex-col w-2/3 md:w-1/4" onSubmit={handleLogin}>
+        <input
+          type="text"
+          placeholder="email@domain.com"
+          className="m-1 p-3 rounded-sm text-black"
+          value={loginEmail}
+          onChange={(e) => setLoginEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="m-1 p-3 rounded-sm text-black"
+          value={loginPassword}
+          onChange={(e) => setLoginPassword(e.target.value)}
+        />
+        <div className="flex gap-4 items-center mt-10 ml-2 justify-center">
+          <Link to="/signUp" className="font-bold hover:text-[#c1a48c]">
+            SIGN UP으로 이동
+          </Link>
+          <div> | </div>
+          <button type="submit" className="font-bold hover:text-[#c1a48c]">
+            LOGIN IN
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

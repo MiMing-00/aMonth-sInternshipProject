@@ -97,25 +97,25 @@ const SignUp: React.FC = () => {
         <input
           type="text"
           placeholder="User name"
-          className="m-1 p-3 rounded-sm text-black"
+          className="m-1 p-3 rounded-sm text-black border-2 border-gray-300"
           value={nickname}
           onChange={(event) => setNickname(event.target.value)}
         />
         <input
           type="email"
           placeholder="email@domain.com"
-          className="m-1 p-3 rounded-sm text-black"
+          className="m-1 p-3 rounded-sm text-black border-2 border-gray-300"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
-          className="m-1 p-3 rounded-sm text-black"
+          className="m-1 p-3 rounded-sm text-black border-2 border-gray-300"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <div className="min-h-10">
+        <div className="min-h-5 h-5">
           {password && (
             <small className="mt-1 ml-2 text-gray-500 text-xs flex flex-col gap-2">
               <div>비밀번호는 최소 6자 이상이어야 하며, </div>
@@ -128,7 +128,10 @@ const SignUp: React.FC = () => {
             LOGIN로 이동
           </Link>
           <div> | </div>
-          <button type="submit" className="font-bold hover:text-[#c1a48c]">
+          <button
+            type="submit"
+            className="bg-[#D1C6A1] text-white py-2 px-6 rounded-md font-semibold hover:bg-[#C2B38A] transition duration-300"
+          >
             SIGN IN
           </button>
         </div>

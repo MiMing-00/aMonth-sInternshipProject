@@ -17,9 +17,7 @@ const MyPage: React.FC = () => {
     data?.avatar || null
   );
 
-  const handleAvatarUrlChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     const MAX_FILE_SIZE = 1 * 1024 * 1024;
 
@@ -65,21 +63,12 @@ const MyPage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center text-center">
-      <h1>{data?.nickname}님의 마이페이지</h1>
-      <form onSubmit={handleUserInfo}>
-        <label>닉네임:</label>
-        <input
-          type="text"
-          name="nickname"
-          value={myPageNickname}
-          onChange={(event) => setMyPageNickname(event.target.value)}
-          placeholder="닉네임을 입력하세요"
-          className="border-2"
-        />
-
-        <div>
-          <label>아바타:</label>
+    <div className="flex flex-col justify-center items-center text-center p-6 mx-auto">
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">
+        {data?.nickname}님의 마이페이지
+      </h1>
+      <form onSubmit={handleUserInfo} className="w-full space-y-6">
+        <div className="flex flex-col items-center">
           {MyPageAvatar ? (
             <img
               src={
@@ -88,15 +77,35 @@ const MyPage: React.FC = () => {
                   : URL.createObjectURL(MyPageAvatar)
               }
               alt={`${data?.nickname}의 아바타`}
-              width="50"
-              height="50"
+              width="128"
+              height="128"
+              className="rounded-full mb-4"
             />
           ) : (
-            <div className="w-32 h-32 border-2 rounded-full bg-gray-200"></div>
+            <div className="w-32 h-32 border-2 border-gray-300 rounded-full mb-4"></div>
           )}
-          <input type="file" name="avatar" onChange={handleAvatarUrlChange} />
+          <input
+            type="file"
+            name="avatar"
+            onChange={handleAvatarChange}
+            className="border-2 border-gray-300 p-2 rounded-sm text-sm text-gray-700 cursor-pointer"
+          />
         </div>
-        <button type="submit" className="text-white">
+        <div className="flex flex-row gap-4 items-center justify-center w-full">
+          <label className="text-sm font-semibold text-gray-700">닉네임:</label>
+          <input
+            type="text"
+            name="nickname"
+            value={myPageNickname}
+            onChange={(event) => setMyPageNickname(event.target.value)}
+            placeholder="닉네임을 입력하세요"
+            className="border-2 border-gray-300 p-3 rounded-md w-2/3 md:w-1/4"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-[#D1C6A1] text-white py-2 px-6 rounded-md font-semibold hover:bg-[#C2B38A] transition duration-300"
+        >
           Save Changes
         </button>
       </form>

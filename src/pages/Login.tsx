@@ -94,7 +94,10 @@ const Login = () => {
             SIGN UP으로 이동
           </Link>
           <div> | </div>
-          <button type="submit" className="font-bold hover:text-[#c1a48c]">
+          <button
+            type="submit"
+            className="bg-[#D1C6A1] text-white py-2 px-6 rounded-md font-semibold hover:bg-[#C2B38A] transition duration-300"
+          >
             LOGIN IN
           </button>
         </div>

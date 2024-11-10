@@ -32,6 +32,8 @@ const Header = () => {
       showDenyButton: true,
       confirmButtonText: "로그아웃",
       denyButtonText: "아니요",
+      confirmButtonColor: "#D1C6A1",
+      icon: "question",
     }).then((result) => {
       if (result.isConfirmed) {
         removeAccessToken();

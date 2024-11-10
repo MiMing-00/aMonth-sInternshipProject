@@ -31,7 +31,8 @@
 
 ## 배포된 웹 어플리케이션 🌐
 
-[**배포된 웹**](https://a-month-s-internship-project.vercel.app/)에서 확인할 수 있습니다. 🎯
+<a href="https://a-month-s-internship-project.vercel.app/" target="_blank">**배포된 웹**</a>에서 확인할 수 있습니다. 🎯
+
 
 ## 로컬 개발 서버 실행 방법 🔧
 

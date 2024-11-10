@@ -56,7 +56,6 @@ const SignUp: React.FC = () => {
       const data = await res.json();
       console.log(data);
 
-      // 중복 아이디 확인
       if (res.status === 409) {
         Swal.fire({
           text: "이미 존재하는 이메일입니다. 다른 이메일을 시도해주세요.",

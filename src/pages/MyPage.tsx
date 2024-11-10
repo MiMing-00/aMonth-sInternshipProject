@@ -21,7 +21,6 @@ const MyPage: React.FC = () => {
     const file = event.target.files ? event.target.files[0] : null;
     const MAX_FILE_SIZE = 1 * 1024 * 1024;
 
-    // 몇이 될지 확인해보기...
     if (file && file.size > MAX_FILE_SIZE) {
       Swal.fire({
         title: "파일의 크기가 너무 큽니다!",
